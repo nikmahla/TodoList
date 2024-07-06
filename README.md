@@ -1,14 +1,14 @@
 # TodoList
 
- [Demo Link](https://nikmahla.github.io/Portfolio/)
+ [Demo Link](https://nikmahla.github.io/TodoList/)
 
-My portfolio website full responsive 🔥
+My portfolio website  responsive 🔥
 
 Developed by Fatemeh Nikookar
 
-Created - 2024-5-31
+Created - 2024-06-07
 
-Technologies Used - Html , Css, Tailwind
+Technologies Used - Html , Css, Tailwind, Javascript
 
 Role - Frontend
 
