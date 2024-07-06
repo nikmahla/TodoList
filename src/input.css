@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
+
+
+body{
+    font-family:'Gochi Hand';
+}

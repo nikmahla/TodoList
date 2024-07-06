@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Todo List</title>
+</head>
+
+<body>
+    <section class="w-full h-screen flex flex-col overflow-hidden">
+
+        <div class="flex justify-center items-center w-full h-[4rem] ">
+            <h2 id="greeting"
+                class=" w-full h-full  text-[1.5rem] text-teal-500 text-center capitalize  font-bold">
+
+            </h2>
+        </div>
+
+
+
+        <div class="flex justify-center  h-full   ">
+
+            <section
+                class=" hover:shadow-purple-700 relative mx-2 overflow-y-scroll overflow-x-hidden flex rounded-lg items-center flex-col w-[26rem] h-[20rem] shadow-lg shadow-purple-400 bg-[#f1f5f8] bg-[radial-gradient(#bfc0c1 7.2%, transparent 0)]  ">
+
+                <div class=" h-[3.5rem] w-full flex justify-center mt-2 ">
+                    <figure class="h-full w-1/2 flex justify-end -rotate-3 ">
+                        <img class="hover:scale-125 h-full w-fit object-cover " src="src/img/laptop.svg" alt="">
+                    </figure>
+                    <h1
+                        class=" hover:font-extrabold mx-6 mt-2 text-center rotate-2 rounded-md w-full h-[2rem] bg-teal-400 text-2xl  capitalize">
+                        to-do list</h1>
+                </div>
+
+                <div class="flex h-[3rem] w-full mt-2">
+                    <p id="today"
+                        class="  text-center  w-full h-full text-teal-400 text-md font-bold tracking-wider  normal-case">
+                    </p>
+                </div>
+
+                <div class="flex h-auto w-full justify-around  absolute top-[35%] left-0">
+                    <input id='userInput' type="text" size="30"
+                        class=" p-2 bg-transparent border-b-4 border-dashed border-purple-600  w-2/4 h-full ">
+                    <button id="submit"
+                        class="  hover:shadow-purple-700 h-full rounded-sm w-1/4 shadow-md shadow-purple-400  -rotate-[2deg] border-2 border-purple-400  ">submit</button>
+                    <button id="update"
+                        class=" hidden hover:shadow-purple-700 h-full rounded-sm w-1/4 shadow-md shadow-purple-400  -rotate-[2deg] border-2 border-purple-400  ">update</button>
+                </div>
+
+                <div id='userList' class=" duration-100flex-row w-[22rem] absolute top-[45%] left-2 ">
+
+                </div>
+
+
+
+
+            </section>
+        </div>
+
+    </section>
+    
+    <footer class="w-full h-[4rem] flex justify-center items-center bg-[#d1e6f7] shadow-md shadow-purple-200">
+        <p class="text-center text-sm text-teal-400 font-bold tracking-wider normal-case">
+          Developed by Mahla Nikookar
+        </p>
+      </footer>
+</body>
+
+<script>
+    let h1 = document.getElementById('greeting')
+    let today = document.getElementById('today')
+    let inputField = document.getElementById('userInput')
+    const submitBtn = document.getElementById('submit')
+    const updateBtn = document.getElementById('update')
+    let userList = document.getElementById('userList')
+    let myIndex = 0
+    let currentEditElement = null
+
+
+    let day = new Date().getDay()
+    let currentTime = new Date().getHours()
+    let weekDay = ''
+    let greeting = ''
+
+    switch (day) {
+        case 0: weekDay = 'sunday'; break;
+        case 1: weekDay = 'monday'; break;
+        case 2: weekDay = 'tuesday'; break;
+        case 3: weekDay = 'wednesday'; break;
+        case 4: weekDay = 'thursday'; break;
+        case 5: weekDay = 'friday'; break;
+        case 6: weekDay = 'saturday'; break;
+
+    }
+    if (currentTime < 6) {
+        greeting = "Good night ! ";
+    } else if (currentTime < 12) {
+        greeting = "Good morning !";
+    } else if (currentTime < 18) {
+        greeting = "Good afternoon !";
+    } else {
+        greeting = "Good night !";
+    }
+
+    h1.innerText = ` ${greeting} `
+    today.innerText = `~ It is ${weekDay}, I need to ~`
+
+    inputField.addEventListener('focus', () => {
+        inputField.classList.add('border-purple-500', 'bg-purple-200');
+        inputField.classList.remove('border-dashed', 'border-b-4', 'border-purple-600', 'bg-transparent');
+    });
+
+    inputField.addEventListener('blur', () => {
+        inputField.classList.remove('border-purple-500', 'bg-purple-200');
+        inputField.classList.add('border-dashed', 'border-b-4', 'border-purple-600', 'bg-transparent');
+    });
+
+    submitBtn.addEventListener('click', () => {
+        let input = inputField.value;
+
+        if (input.length > 0) {
+            let temp = document.createElement('div');
+            temp.className = ' h-auto w-full mt-5 ms-4 *:text-teal-400 flex justify-between items-center px-4 hover:shadow-blue-400  bg-blue-100 shadow-md shadow-blue-200 rounded-sm ';
+            temp.innerHTML = `
+                <p class="w-fit h-fit text-sm font-bold tracking-wider text-left  normal-case ">
+                ${input}
+                </p>
+                <div class=" *:ps-4 h-auto  cursor-pointer mt-2 ">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+                <span class="material-symbols-outlined">
+                    delete
+                </span>
+                <span class="material-symbols-outlined">
+                    check
+                </span>
+                </div>
+            `;
+
+            userList.appendChild(temp);
+            temp.setAttribute('id', 'index' + myIndex);
+            myIndex++;
+            inputField.focus();
+
+            const newSpans = temp.querySelectorAll('span');
+            newSpans.forEach((span) => {
+                span.addEventListener('click', (e) => {
+                    let flag = span.innerText;
+
+                    switch (flag) {
+                        case 'edit': {
+                            submitBtn.style.display = 'none';
+                            updateBtn.classList.remove('hidden');
+                            inputField.value = span.parentElement.previousElementSibling.innerText;
+                            currentEditElement = span.parentElement.previousElementSibling;
+                            inputField.focus();
+                            break;
+                        }
+                        case 'check': {
+                            span.parentElement.previousElementSibling.classList.add('line-through');
+                            span.parentElement.previousElementSibling.parentElement.classList.add('bg-blue-50');
+                            break;
+                        }
+                        default: {
+                            span.parentElement.parentElement.remove();
+                        }
+                    }
+                });
+            });
+        } else {
+            alert('Enter your task');
+        }
+        inputField.value = '';
+    });
+
+    updateBtn.addEventListener('click', () => {
+        if (currentEditElement) {
+            currentEditElement.innerText = inputField.value;
+            submitBtn.style.display = 'block';
+            updateBtn.classList.add('hidden');
+            inputField.value = '';
+            currentEditElement = null;
+        }
+    });
+
+
+
+
+
+</script>
+
+</html>
